@@ -18,7 +18,6 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
         $otp = (string) random_int(100000, 999999);
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
