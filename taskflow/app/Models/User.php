@@ -16,17 +16,18 @@ class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
+    protected $fillable = ['name', 'email', 'password', 'otp', 'otp_expires_at', 'is_verified'];
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
+            'otp_expires_at' => 'datetime',
+            'is_verified' => 'boolean',
             'password' => 'hashed',
         ];
+    }
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
     }
 }
