@@ -35,7 +35,7 @@ On Windows with WAMP/XAMPP, make sure `php`, `composer`, `node`, and `npm` are a
 Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/SahariarIslm/TaskFlowTodoApp.git
 cd TaskFlow/taskflow
 ```
 
