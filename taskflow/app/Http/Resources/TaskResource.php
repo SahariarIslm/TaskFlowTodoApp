@@ -22,6 +22,10 @@ class TaskResource extends JsonResource
             'priority' => $this->priority,
             'due_date' => $this->due_date?->format('Y-m-d'),
             'assignee' => $this->assignee,
+            'project' => $this->project,
+            'tags' => $this->tags ?? [],
+            'comments_count' => $this->comments_count ?? $this->comments()->count(),
+            'comments' => TaskCommentResource::collection($this->whenLoaded('comments')),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
         ];
     }

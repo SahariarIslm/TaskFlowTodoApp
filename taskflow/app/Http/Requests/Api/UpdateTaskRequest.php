@@ -7,6 +7,19 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateTaskRequest extends FormRequest
 {
+    protected function prepareForValidation(): void
+    {
+        if (is_string($this->tags)) {
+            $this->merge([
+                'tags' => collect(explode(',', $this->tags))
+                    ->map(fn ($tag) => trim($tag))
+                    ->filter()
+                    ->values()
+                    ->all(),
+            ]);
+        }
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -29,6 +42,9 @@ class UpdateTaskRequest extends FormRequest
             'priority' => 'required|in:low,medium,high',
             'due_date' => 'nullable|date',
             'assignee' => 'nullable|string|max:255',
+            'project' => 'required|string|max:255',
+            'tags' => 'nullable|array',
+            'tags.*' => 'string|max:50',
         ];
     }
 }

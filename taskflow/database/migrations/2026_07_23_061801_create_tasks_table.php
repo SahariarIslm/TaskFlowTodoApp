@@ -20,6 +20,8 @@ return new class extends Migration
             $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
             $table->date('due_date')->nullable();
             $table->string('assignee')->nullable();
+            $table->string('project')->default('Platform');
+            $table->json('tags')->nullable();
             $table->timestamps();
 
             $table->index(['user_id', 'status']);

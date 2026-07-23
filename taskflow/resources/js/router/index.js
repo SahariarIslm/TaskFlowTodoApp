@@ -6,7 +6,8 @@ const routes = [
     { path: '/login', name: 'login', component: () => import('../pages/LoginPage.vue'), meta: { guestOnly: true } },
     { path: '/register', name: 'register', component: () => import('../pages/RegisterPage.vue'), meta: { guestOnly: true } },
     { path: '/verify-otp', name: 'verify-otp', component: () => import('../pages/OtpPage.vue'), meta: { guestOnly: true } },
-    { path: '/dashboard', name: 'dashboard', component: () => import('../pages/DashboardPage.vue'), meta: { requiresAuth: true } },
+    { path: '/dashboard', name: 'dashboard', component: () => import('../pages/DashboardPage.vue'), meta: { requiresAuth: true, title: 'Dashboard' } },
+    { path: '/my-tasks', name: 'my-tasks', component: () => import('../pages/DashboardPage.vue'), meta: { requiresAuth: true, title: 'My Tasks' } },
     { path: '/tasks/:id', name: 'task-details', component: () => import('../pages/TaskDetailsPage.vue'), meta: { requiresAuth: true } },
 ];
 
