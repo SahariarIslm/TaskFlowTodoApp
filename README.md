@@ -79,21 +79,6 @@ APP_URL=http://localhost:8000
 
 The default `.env.example` uses SQLite:
 
-```env
-DB_CONNECTION=sqlite
-```
-
-Create the SQLite database file:
-
-```bash
-php -r "file_exists('database/database.sqlite') || touch('database/database.sqlite');"
-```
-
-Run migrations:
-
-```bash
-php artisan migrate
-```
 
 For MySQL or MariaDB, create a database manually first, then update `.env`:
 
