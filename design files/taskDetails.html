@@ -1,0 +1,834 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TaskFlow Dashboard</title>
+    <link rel="stylesheet" href="globals.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      /** @type {import('tailwindcss').Config} */
+      tailwind.config = {
+        corePlugins: {
+          preflight: false,
+        },
+        theme: {
+          extend: {},
+        },
+        plugins: [],
+      };
+    </script>
+  </head>
+  <body>
+    <div class="min-h-screen bg-white">
+      <div class="flex min-h-screen min-w-[1200px] bg-slate-50">
+        <aside
+          class="flex w-60 shrink-0 flex-col border-r border-slate-200 bg-slate-50"
+          aria-label="Primary navigation"
+        >
+          <header class="flex h-16 items-center border-b border-slate-200 px-4">
+            <a
+              href="#"
+              class="font-bold text-base leading-6 tracking-[-0.4px] text-[#0f172b]"
+              >TaskFlow</a
+            >
+          </header>
+          <nav class="flex flex-1 flex-col px-2 py-3" aria-label="Workspace">
+            <ul class="m-0 list-none p-0">
+              <li>
+                <a
+                  href="#"
+                  aria-current="page"
+                  class="flex h-10 w-full [font-family:'Inter',Helvetica] items-center rounded-2xl bg-[#4f39f6] px-3 py-2.5 font-medium text-sm leading-5 text-white shadow-[0px_1px_2px_-1px_#c6d2ff,0px_1px_3px_#c6d2ff]"
+                >
+                  Dashboard
+                </a>
+              </li>
+              <li class="pt-0.5">
+                <a
+                  href="#"
+                  class="flex h-10 items-center justify-between rounded-2xl px-3 py-2.5 [font-family:'Inter',Helvetica] font-medium text-sm leading-5 text-[#45556c]"
+                >
+                  <span>My Tasks</span>
+                  <span
+                    class="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-slate-200 px-1.5 py-0.5 text-xs font-bold leading-4 text-[#45556c]"
+                    aria-label="4 tasks"
+                    >4</span
+                  >
+                </a>
+              </li>
+              <li class="pt-0.5">
+                <a
+                  href="#"
+                  class="flex h-10 items-center rounded-2xl px-3 py-2.5 font-medium text-sm leading-5 text-[#45556c]"
+                  >Profile</a
+                >
+              </li>
+              <li class="pt-0.5">
+                <a
+                  href="#"
+                  class="flex h-10 items-center rounded-2xl px-3 py-2.5 font-medium text-sm leading-5 text-[#45556c]"
+                  >Settings</a
+                >
+              </li>
+            </ul>
+            <section class="pt-[18px]" aria-labelledby="projects-heading">
+              <h2
+                id="projects-heading"
+                class="m-0 px-3 text-xs font-normal leading-4 tracking-[1.2px] text-[#90a1b9]"
+              >
+                PROJECTS
+              </h2>
+              <ul class="m-0 list-none p-0 pt-2">
+                <li>
+                  <a
+                    href="#"
+                    class="flex h-9 items-center gap-3 rounded-2xl px-3 py-2 font-medium text-sm leading-5 text-[#45556c]"
+                  >
+                    <span
+                      class="h-2.5 w-2.5 rounded-full bg-[#2b7fff]"
+                      aria-hidden="true"
+                    ></span>
+                    <span>Platform</span>
+                    <span class="text-xs font-medium leading-4 text-[#90a1b9]"
+                      >12</span
+                    >
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="flex h-9 items-center gap-3 rounded-2xl px-3 py-2 font-medium text-sm leading-5 text-[#45556c]"
+                  >
+                    <span
+                      class="h-2.5 w-2.5 rounded-full bg-[#8e51ff]"
+                      aria-hidden="true"
+                    ></span>
+                    <span>Growth</span>
+                    <span class="text-xs font-medium leading-4 text-[#90a1b9]"
+                      >8</span
+                    >
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="flex h-9 items-center gap-3 rounded-2xl px-3 py-2 font-medium text-sm leading-5 text-[#45556c]"
+                  >
+                    <span
+                      class="h-2.5 w-2.5 rounded-full bg-[#00bc7d]"
+                      aria-hidden="true"
+                    ></span>
+                    <span>Infrastructure</span>
+                    <span class="text-xs font-medium leading-4 text-[#90a1b9]"
+                      >5</span
+                    >
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="flex h-9 items-center gap-3 rounded-2xl px-3 py-2 font-medium text-sm leading-5 text-[#45556c]"
+                  >
+                    <span
+                      class="h-2.5 w-2.5 rounded-full bg-[#ff2056]"
+                      aria-hidden="true"
+                    ></span>
+                    <span>Design</span>
+                    <span class="text-xs font-medium leading-4 text-[#90a1b9]"
+                      >3</span
+                    >
+                  </a>
+                </li>
+              </ul>
+            </section>
+          </nav>
+          <footer class="border-t border-slate-200 p-3">
+            <button
+              type="button"
+              class="flex h-[52px] w-full items-center gap-3 rounded-2xl p-2 text-left"
+              aria-label="Open Alex Morgan account menu"
+            >
+              <span
+                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-violet-100 text-xs font-normal leading-4 text-[#7008e7] shadow-[0px_0px_0px_2px_#ffffff]"
+                aria-hidden="true"
+                >AM</span
+              >
+              <span class="flex min-w-0 flex-col">
+                <span class="text-sm font-normal leading-5 text-[#1d293d]"
+                  >Alex Morgan</span
+                >
+                <span
+                  class="truncate text-xs font-normal leading-4 text-[#62748e]"
+                  >alex@taskflow.io</span
+                >
+              </span>
+            </button>
+          </footer>
+        </aside>
+        <div class="flex min-w-0 flex-1 flex-col">
+          <header
+            class="flex h-16 shrink-0 items-center justify-between border-b border-slate-200 bg-white px-6"
+          >
+            <div>
+              <h1 class="m-0 text-base font-normal leading-5 text-[#0f172b] [font-family:'Inter',Helvetica]">
+                Task Detail
+              </h1>
+              <p class="m-0 text-xs font-normal leading-4 text-[#62748e] [font-family:'Inter',Helvetica]">
+                TF-001 · Platform
+              </p>
+            </div>
+            <div class="flex items-center gap-3">
+              <form role="search">
+                <label class="sr-only [font-family:'Inter',Helvetica]" for="header-search">Search tasks</label>
+                <input
+                  id="header-search"
+                  type="search"
+                  placeholder="Search tasks..."
+                  class="h-9 w-56 rounded-2xl border-0 bg-slate-100 py-2 pl-4 pr-4 text-sm font-normal leading-5 text-[#0f172b] placeholder:text-[#90a1b9]"
+                />
+              </form>
+              <button
+                type="button"
+                class="flex h-9 items-center [font-family:'Inter',Helvetica] rounded-2xl bg-[#4f39f6] px-4 py-2 text-sm font-medium leading-5 text-white shadow-[0px_1px_2px_-1px_#c6d2ff,0px_1px_3px_#c6d2ff]"
+              >
+                New Task
+              </button>
+              <button
+                type="button"
+                class="flex h-8 w-8 items-center justify-center rounded-full bg-violet-100 text-xs font-normal leading-4 text-[#7008e7] shadow-[0px_0px_0px_2px_#ffffff]"
+                aria-label="Open Alex Morgan account menu"
+              >
+                AM
+              </button>
+            </div>
+          </header>
+          <main class="flex min-h-0 flex-1 flex-col gap-6 bg-[#f8fafc80] p-6">
+            
+            <section class="flex min-h-0 flex-1 flex-col overflow-hidden" >
+              <div class="flex flex-col h-[990px] items-start">
+        
+        <div class="flex flex-col w-[1680px] items-start p-6 bg-[#f8fafc80]">
+          <div
+            class="px-[368px] py-0 flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]"
+          >
+            <div
+              class="grid grid-cols-[285.33px_285.33px_285.33px] grid-rows-[708.75px] max-w-4xl w-[896px] h-[708.75px] gap-5"
+            >
+              <div
+                class="relative row-[1_/_2] col-[1_/_3] justify-self-start [align-self:start] w-[590.67px] h-[708.75px] flex flex-col items-start"
+              >
+                <div
+                  class="flex flex-col h-[708.75px] items-start p-6 relative self-stretch w-full bg-white rounded-2xl border border-solid border-slate-200"
+                >
+                  <div
+                    class="flex h-[54.75px] items-start justify-between relative self-stretch w-full"
+                  >
+                    <div
+                      class="flex flex-col w-[457.92px] h-[54.75px] items-start relative"
+                    >
+                      <div
+                        class="flex h-[22px] items-center gap-2 relative self-stretch w-full"
+                      >
+                        <div
+                          class="flex flex-col w-[55.6px] h-5 items-start px-2 py-0.5 relative bg-slate-100 rounded-[10px]"
+                        >
+                          <div
+                            class="relative w-fit mt-[-1.00px] mr-[-4.40px] [font-family:'Consolas-Regular',Helvetica] font-normal text-[#90a1b9] text-xs tracking-[0] leading-4 whitespace-nowrap"
+                          >
+                            TF-001
+                          </div>
+                        </div>
+                        <div
+                          class="w-[59.7px] h-[22px] bg-indigo-50 border border-solid border-[#c6d2ff] flex items-center px-2 py-0.5 relative rounded-[10px]"
+                        >
+                          <div
+                            class="mr-[-0.30px] text-[#432dd7] text-xs leading-4 relative w-fit [font-family:'Inter',Helvetica] font-medium tracking-[0] whitespace-nowrap"
+                          >
+                            Growth
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="w-[457.92px] h-[32.75px] pt-2 pb-0 px-0 flex flex-col items-start relative"
+                      >
+                        <p
+                          class="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#0f172b] text-lg tracking-[0] leading-[24.8px] whitespace-nowrap"
+                        >
+                          Redesign onboarding flow for new users
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      class="all-unset box-border w-[66.75px] h-[34px] items-center gap-1.5 px-3 py-2 rounded-2xl border border-solid border-slate-200 flex relative"
+                    >
+                      <div
+                        class="relative w-fit mr-[-0.25px] [font-family:'Inter',Helvetica] font-medium text-[#45556c] text-xs text-center tracking-[0] leading-4 whitespace-nowrap"
+                      >
+                        Edit
+                      </div>
+                    </button>
+                  </div>
+                  <div
+                    class="flex w-[540.67px] h-[38px] items-center gap-2 pt-4 pb-0 px-0 relative"
+                  >
+                    <div
+                      class="flex w-[100.88px] h-[22px] items-center gap-1.5 px-2 py-0.5 relative bg-blue-50 rounded-[10px] border border-solid border-[#bedbff]"
+                    >
+                      <div
+                        class="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1447e6] text-xs tracking-[0] leading-4 whitespace-nowrap"
+                      >
+                        In Progress
+                      </div>
+                    </div>
+                    <div
+                      class="flex w-[56.6px] h-[22px] items-center gap-1.5 px-2 py-0.5 relative bg-orange-50 rounded-[10px] border border-solid border-[#ffd6a8]"
+                    >
+                      <div
+                        class="relative w-1.5 h-1.5 bg-[#ff6900] rounded-[340282001837565597733306976381245063168px]"
+                      ></div>
+                      <div
+                        class="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#ca3500] text-xs tracking-[0] leading-4 whitespace-nowrap"
+                      >
+                        High
+                      </div>
+                    </div>
+                    <div
+                      class="w-[55.85px] h-5 bg-slate-100 flex items-center px-2 py-0.5 relative rounded-[10px]"
+                    >
+                      <div
+                        class="mr-[-0.15px] text-[#314158] text-xs leading-4 relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium tracking-[0] whitespace-nowrap"
+                      >
+                        Design
+                      </div>
+                    </div>
+                    <div
+                      class="w-[33.28px] h-5 bg-slate-100 flex items-center px-2 py-0.5 relative rounded-[10px]"
+                    >
+                      <div
+                        class="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#314158] text-xs tracking-[0] leading-4 whitespace-nowrap"
+                      >
+                        UX
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="pt-5 pb-0 px-0 flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]"
+                  >
+                    <p
+                      class="relative w-[541px] mt-[-1.00px] mr-[-0.33px] [font-family:'Inter',Helvetica] font-normal text-[#45556c] text-sm tracking-[0] leading-[22.8px]"
+                    >
+                      Complete overhaul of the first-run experience to improve
+                      activation rates and reduce time-to-value for new signups.
+                    </p>
+                  </div>
+                  <div
+                    class="pt-6 pb-0 px-0 flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]"
+                  >
+                    <div
+                      class="flex w-[540.67px] h-[38px] items-center gap-1 relative border-b [border-bottom-style:solid] border-slate-100"
+                    >
+                      <div class="relative w-[95.53px] h-[37px]">
+                        <button
+                          class="all-unset box-border flex-col w-24 h-[38px] items-center justify-center px-4 py-2 border-b-2 [border-bottom-style:solid] border-[#4f39f6] flex relative"
+                        >
+                          <div
+                            class="relative w-fit mt-[-2.00px] ml-[-0.23px] mr-[-0.23px] [font-family:'Inter',Helvetica] font-medium text-[#4f39f6] text-sm text-center tracking-[0] leading-5 whitespace-nowrap"
+                          >
+                            Overview
+                          </div>
+                        </button>
+                      </div>
+                      <div class="relative w-[82.88px] h-[37px]">
+                        <button
+                          class="all-unset box-border flex-col w-[83px] h-[38px] items-center justify-center px-4 py-2 border-b-2 [border-bottom-style:solid] border-transparent flex relative"
+                        >
+                          <div
+                            class="relative w-fit mt-[-2.00px] ml-[-0.06px] mr-[-0.06px] [font-family:'Inter',Helvetica] font-medium text-[#62748e] text-sm text-center tracking-[0] leading-5 whitespace-nowrap"
+                          >
+                            Activity
+                          </div>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="flex flex-col w-[540.67px] h-[438.5px] items-start pt-5 pb-0 px-0 relative"
+                  >
+                    <div
+                      class="flex flex-col h-[334.5px] items-start relative self-stretch w-full"
+                    >
+                      <div
+                        class="h-4 self-stretch w-full flex flex-col items-start relative"
+                      >
+                        <div
+                          class="tracking-[0.60px] relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#62748e] text-xs leading-4 whitespace-nowrap"
+                        >
+                          COMMENTS (3)
+                        </div>
+                      </div>
+                      <div
+                        class="flex flex-col w-[540.67px] h-[318.5px] items-start pt-3 pb-0 px-0 relative"
+                      >
+                        <div
+                          class="flex h-[91.5px] items-start gap-3 relative self-stretch w-full"
+                        >
+                          <div
+                            class="w-8 h-8 bg-blue-100 flex items-center justify-center relative rounded-[340282001837565597733306976381245063168px] shadow-[0px_0px_0px_2px_#ffffff]"
+                          >
+                            <div
+                              class="relative w-fit [font-family:'Inter',Helvetica] font-normal text-[#1447e6] text-xs tracking-[0] leading-4 whitespace-nowrap"
+                            >
+                              SC
+                            </div>
+                          </div>
+                          <div
+                            class="flex flex-col h-[91.5px] items-start p-3 bg-slate-50 rounded-2xl"
+                          >
+                            <div
+                              class="flex h-4 items-center justify-between relative self-stretch w-full"
+                            >
+                              <div
+                                class="flex flex-col w-[59.15px] h-4 items-start relative"
+                              >
+                                <div
+                                  class="mr-[-0.85px] text-[#1d293d] text-xs leading-4 relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal tracking-[0] whitespace-nowrap"
+                                >
+                                  Sam Chen
+                                </div>
+                              </div>
+                              <div
+                                class="flex flex-col w-[67.63px] h-4 items-start relative"
+                              >
+                                <div
+                                  class="mr-[-0.37px] relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#90a1b9] text-xs tracking-[0] leading-4 whitespace-nowrap"
+                                >
+                                  2 hours ago
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="pt-1.5 pb-0 px-0 mb-[-0.50px] flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]"
+                            >
+                              <p
+                                class="relative w-[473px] mt-[-1.00px] mr-[-0.33px] [font-family:'Inter',Helvetica] font-normal text-[#45556c] text-sm tracking-[0] leading-[22.8px]"
+                              >
+                                I found the root cause — it&#39;s a race
+                                condition when the refresh token fires while a
+                                request is in-flight. Working on a fix.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="flex w-[540.67px] h-[107.5px] items-start gap-3 pt-4 pb-0 px-0 relative"
+                        >
+                          <div
+                            class="w-8 h-8 bg-[#d0fae5] flex items-center justify-center relative rounded-[340282001837565597733306976381245063168px] shadow-[0px_0px_0px_2px_#ffffff]"
+                          >
+                            <div
+                              class="relative w-fit [font-family:'Inter',Helvetica] font-normal text-[#007a55] text-xs tracking-[0] leading-4 whitespace-nowrap"
+                            >
+                              JL
+                            </div>
+                          </div>
+                          <div
+                            class="flex flex-col h-[91.5px] items-start p-3 bg-slate-50 rounded-2xl"
+                          >
+                            <div
+                              class="flex h-4 items-center justify-between relative self-stretch w-full"
+                            >
+                              <div
+                                class="flex flex-col w-[64.47px] h-4 items-start relative"
+                              >
+                                <div
+                                  class="mr-[-0.53px] text-[#1d293d] text-xs leading-4 relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal tracking-[0] whitespace-nowrap"
+                                >
+                                  Jordan Lee
+                                </div>
+                              </div>
+                              <div
+                                class="flex flex-col w-[58.87px] h-4 items-start relative"
+                              >
+                                <div
+                                  class="mr-[-1.13px] relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#90a1b9] text-xs tracking-[0] leading-4 whitespace-nowrap"
+                                >
+                                  1 hour ago
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="pt-1.5 pb-0 px-0 mb-[-0.50px] flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]"
+                            >
+                              <p
+                                class="relative w-[473px] mt-[-1.00px] mr-[-0.33px] [font-family:'Inter',Helvetica] font-normal text-[#45556c] text-sm tracking-[0] leading-[22.8px]"
+                              >
+                                Can you add unit tests for the token refresh
+                                logic? We had a regression here last quarter.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="flex w-[540.67px] h-[107.5px] items-start gap-3 pt-4 pb-0 px-0 relative"
+                        >
+                          <div
+                            class="w-8 h-8 bg-violet-100 flex items-center justify-center relative rounded-[340282001837565597733306976381245063168px] shadow-[0px_0px_0px_2px_#ffffff]"
+                          >
+                            <div
+                              class="relative w-fit [font-family:'Inter',Helvetica] font-normal text-[#7008e7] text-xs tracking-[0] leading-4 whitespace-nowrap"
+                            >
+                              AM
+                            </div>
+                          </div>
+                          <div
+                            class="flex flex-col h-[91.5px] items-start p-3 bg-slate-50 rounded-2xl"
+                          >
+                            <div
+                              class="flex h-4 items-center justify-between relative self-stretch w-full"
+                            >
+                              <div
+                                class="flex flex-col w-[73.17px] h-4 items-start relative"
+                              >
+                                <div
+                                  class="text-[#1d293d] text-xs leading-4 relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal tracking-[0] whitespace-nowrap"
+                                >
+                                  Alex Morgan
+                                </div>
+                              </div>
+                              <div
+                                class="flex flex-col w-[63.43px] h-4 items-start relative"
+                              >
+                                <div
+                                  class="mr-[-0.57px] relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#90a1b9] text-xs tracking-[0] leading-4 whitespace-nowrap"
+                                >
+                                  45 min ago
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="pt-1.5 pb-0 px-0 mb-[-0.50px] flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]"
+                            >
+                              <p
+                                class="relative w-[473px] mt-[-1.00px] mr-[-0.33px] [font-family:'Inter',Helvetica] font-normal text-[#45556c] text-sm tracking-[0] leading-[22.8px]"
+                              >
+                                Agreed. Also tagging this as urgent — we have
+                                enterprise customers affected.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="flex w-[540.67px] h-[84px] items-start gap-3 pt-5 pb-0 px-0 relative"
+                    >
+                      <div
+                        class="w-8 h-8 bg-violet-100 flex items-center justify-center relative rounded-[340282001837565597733306976381245063168px] shadow-[0px_0px_0px_2px_#ffffff]"
+                      >
+                        <div
+                          class="relative w-fit [font-family:'Inter',Helvetica] font-normal text-[#7008e7] text-xs tracking-[0] leading-4 whitespace-nowrap"
+                        >
+                          AM
+                        </div>
+                      </div>
+                      <div class="absolute top-5 left-11 w-[497px] h-16 flex">
+                        <div
+                          class="flex w-[496.67px] h-[62px] relative flex-col items-start px-3.5 py-2.5 bg-white rounded-2xl border border-solid border-slate-200"
+                        >
+                          <div
+                            class="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-[#90a1b9] text-sm tracking-[0] leading-5"
+                          >
+                            Add a comment...
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="relative row-[1_/_2] col-[3_/_4] justify-self-start [align-self:start] w-[285.33px] h-[708.75px] flex flex-col items-start"
+              >
+                <div
+                  class="flex flex-col h-[276.5px] items-start p-5 relative self-stretch w-full bg-white rounded-2xl border border-solid border-slate-200"
+                >
+                  <div
+                    class="flex flex-col h-4 items-start relative self-stretch w-full"
+                  >
+                    <div
+                      class="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#62748e] text-xs tracking-[0.60px] leading-4 whitespace-nowrap"
+                    >
+                      DETAILS
+                    </div>
+                  </div>
+                  <div
+                    class="flex flex-col w-[243.33px] h-[218.5px] items-start pt-4 pb-0 px-0 relative"
+                  >
+                    <div
+                      class="flex h-6 items-start justify-between relative self-stretch w-full"
+                    >
+                      <div
+                        class="flex flex-col w-24 h-[18px] items-start pt-0.5 pb-0 px-0 relative"
+                      >
+                        <div
+                          class="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#62748e] text-xs tracking-[0] leading-4 whitespace-nowrap"
+                        >
+                          Assignee
+                        </div>
+                      </div>
+                      <div
+                        class="flex w-[115.28px] h-6 items-center gap-2 relative"
+                      >
+                        <div
+                          class="w-6 h-6 bg-violet-100 flex items-center justify-center relative rounded-[340282001837565597733306976381245063168px] shadow-[0px_0px_0px_2px_#ffffff]"
+                        >
+                          <div
+                            class="relative w-fit [font-family:'Inter',Helvetica] font-normal text-[#7008e7] text-xs tracking-[0] leading-4 whitespace-nowrap"
+                          >
+                            AM
+                          </div>
+                        </div>
+                        <div
+                          class="flex flex-col w-[83.28px] h-5 items-start relative"
+                        >
+                          <div
+                            class="text-[#314158] text-sm leading-5 relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal tracking-[0] whitespace-nowrap"
+                          >
+                            Alex Morgan
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="flex w-[243.33px] h-[34px] items-start justify-between pt-3.5 pb-0 px-0 relative"
+                    >
+                      <div
+                        class="flex flex-col w-24 h-[18px] items-start pt-0.5 pb-0 px-0 relative"
+                      >
+                        <div
+                          class="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#62748e] text-xs tracking-[0] leading-4 whitespace-nowrap"
+                        >
+                          Due Date
+                        </div>
+                      </div>
+                      <div
+                        class="flex w-[99.3px] h-5 items-center gap-1.5 relative"
+                      >
+                        <div
+                          class="mr-[-0.70px] relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#314158] text-sm tracking-[0] leading-5 whitespace-nowrap"
+                        >
+                          2026-07-25
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="flex w-[243.33px] h-[38.5px] items-start justify-between pt-3.5 pb-0 px-0 relative"
+                    >
+                      <div
+                        class="flex flex-col w-24 h-[18px] items-start pt-0.5 pb-0 px-0 relative"
+                      >
+                        <div
+                          class="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#62748e] text-xs tracking-[0] leading-4 whitespace-nowrap"
+                        >
+                          Project
+                        </div>
+                      </div>
+                      <div class="relative w-[59.7px] h-[24.5px]">
+                        <div
+                          class="w-[60px] h-[22px] top-0.5 bg-indigo-50 border border-solid border-[#c6d2ff] flex items-center px-2 py-0.5 relative rounded-[10px]"
+                        >
+                          <div
+                            class="mr-[-0.30px] text-[#432dd7] text-xs leading-4 relative w-fit [font-family:'Inter',Helvetica] font-medium tracking-[0] whitespace-nowrap"
+                          >
+                            Growth
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="flex w-[243.33px] h-[38px] items-start justify-between pt-3.5 pb-0 px-0 relative"
+                    >
+                      <div
+                        class="flex flex-col w-24 h-[18px] items-start pt-0.5 pb-0 px-0 relative"
+                      >
+                        <div
+                          class="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#62748e] text-xs tracking-[0] leading-4 whitespace-nowrap"
+                        >
+                          Created
+                        </div>
+                      </div>
+                      <div
+                        class="flex flex-col w-[78.47px] h-6 items-start relative"
+                      >
+                        <div
+                          class="mr-[-1.53px] relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#314158] text-sm tracking-[0] leading-5 whitespace-nowrap"
+                        >
+                          2026-07-01
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="flex w-[243.33px] h-[34px] items-start justify-between pt-3.5 pb-0 px-0 relative"
+                    >
+                      <div
+                        class="flex flex-col w-24 h-[18px] items-start pt-0.5 pb-0 px-0 relative"
+                      >
+                        <div
+                          class="tracking-[0] relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#62748e] text-xs leading-4 whitespace-nowrap"
+                        >
+                          Comments
+                        </div>
+                      </div>
+                      <div
+                        class="flex w-[27.67px] h-5 items-center gap-1.5 relative"
+                      >
+                        <div
+                          class="mr-[-0.33px] font-normal text-[#314158] text-sm leading-5 relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] tracking-[0] whitespace-nowrap"
+                        >
+                          8
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="flex w-[243.33px] h-[34px] items-start justify-between pt-3.5 pb-0 px-0 relative"
+                    >
+                      <div
+                        class="flex flex-col w-24 h-[18px] items-start pt-0.5 pb-0 px-0 relative"
+                      >
+                        <div
+                          class="tracking-[0] relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#62748e] text-xs leading-4 whitespace-nowrap"
+                        >
+                          Attachments
+                        </div>
+                      </div>
+                      <div
+                        class="flex w-[27.65px] h-5 items-center gap-1.5 relative"
+                      >
+                        <div
+                          class="mr-[-0.35px] font-normal text-[#314158] text-sm leading-5 relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] tracking-[0] whitespace-nowrap"
+                        >
+                          3
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pt-4 pb-0 px-0 flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]"
+                >
+                  <div
+                    class="flex flex-col w-[285.33px] h-64 items-start p-5 relative bg-white rounded-2xl border border-solid border-slate-200"
+                  >
+                    <div
+                      class="flex flex-col h-4 items-start relative self-stretch w-full"
+                    >
+                      <div
+                        class="tracking-[0.60px] relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#62748e] text-xs leading-4 whitespace-nowrap"
+                      >
+                        ATTACHMENTS
+                      </div>
+                    </div>
+                    <div
+                      class="pt-3 pb-0 px-0 flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]"
+                    >
+                      <div
+                        class="flex w-[243.33px] h-12 items-center gap-3 px-1 py-2 relative rounded-xl"
+                      >
+                        <div class="flex flex-col h-8 items-start">
+                          <div
+                            class="h-4 flex flex-col items-start relative self-stretch w-full"
+                          >
+                            <div
+                              class="text-[#314158] text-xs leading-4 relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium tracking-[0] whitespace-nowrap"
+                            >
+                              design-mockup.fig
+                            </div>
+                          </div>
+                          <div
+                            class="h-4 flex flex-col items-start relative self-stretch w-full"
+                          >
+                            <div
+                              class="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#90a1b9] text-xs tracking-[0] leading-4 whitespace-nowrap"
+                            >
+                              2.4 MB
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="flex h-12 items-center gap-3 px-1 py-2 relative self-stretch w-full rounded-xl"
+                    >
+                      <div class="flex flex-col h-8 items-start">
+                        <div
+                          class="h-4 flex flex-col items-start relative self-stretch w-full"
+                        >
+                          <div
+                            class="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#314158] text-xs tracking-[0] leading-4 whitespace-nowrap"
+                          >
+                            auth-flow-diagram.png
+                          </div>
+                        </div>
+                        <div
+                          class="h-4 flex flex-col items-start relative self-stretch w-full"
+                        >
+                          <div
+                            class="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#90a1b9] text-xs tracking-[0] leading-4 whitespace-nowrap"
+                          >
+                            840 KB
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="flex h-12 items-center gap-3 px-1 py-2 relative self-stretch w-full rounded-xl"
+                    >
+                      <div class="flex flex-col h-8 items-start">
+                        <div
+                          class="h-4 flex flex-col items-start relative self-stretch w-full"
+                        >
+                          <div
+                            class="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#314158] text-xs tracking-[0] leading-4 whitespace-nowrap"
+                          >
+                            bug-report.pdf
+                          </div>
+                        </div>
+                        <div
+                          class="h-4 flex flex-col items-start relative self-stretch w-full"
+                        >
+                          <div
+                            class="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#90a1b9] text-xs tracking-[0] leading-4 whitespace-nowrap"
+                          >
+                            156 KB
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="flex flex-col items-start pt-2 pb-0 px-0 relative self-stretch w-full flex-[0_0_auto]"
+                    >
+                      <button
+                        class="all-unset box-border w-[243.33px] h-[34px] items-center justify-center gap-2 px-0 py-2 rounded-2xl border border-dashed border-[#cad5e2] flex relative"
+                      >
+                        <div
+                          class="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#62748e] text-xs text-center tracking-[0] leading-4 whitespace-nowrap"
+                        >
+                          Upload file
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
