@@ -102,15 +102,16 @@
 
 <script setup>
 import { computed, onMounted, ref } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useAuthStore } from '../stores/auth';
+import { useDashboardStore } from '../stores/dashboard';
 import { useRouter } from 'vue-router';
-import axios from '../plugins/axios';
 
 const auth = useAuthStore();
+const dashboard = useDashboardStore();
 const router = useRouter();
 const emit = defineEmits(['new-task']);
-const projects = ref([]);
-const totalTasks = ref(0);
+const { projects, totalTasks } = storeToRefs(dashboard);
 const showAccountMenu = ref(false);
 const initials = computed(() =>
     (auth.user?.name || 'Alex Morgan')
@@ -143,16 +144,6 @@ const menuItems = computed(() => [
         icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" stroke="currentColor" stroke-width="2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1A2 2 0 1 1 4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1A2 2 0 1 1 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3h.1a1.7 1.7 0 0 0 1-1.6V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1A2 2 0 1 1 19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.6 1h.1a2 2 0 1 1 0 4H21a1.7 1.7 0 0 0-1.6 1Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
     },
 ]);
-const projectColors = ['bg-blue-500', 'bg-[#4f39f6]', 'bg-emerald-500', 'bg-rose-500', 'bg-amber-500'];
-const fetchProjects = async () => {
-    const { data } = await axios.get('/dashboard/projects');
-    projects.value = data.map((project, index) => ({ ...project, color: projectColors[index % projectColors.length] }));
-};
-const fetchStats = async () => {
-    const { data } = await axios.get('/dashboard/stats');
-    totalTasks.value = data.total_tasks || 0;
-};
-
 const handleLogout = async () => {
     showAccountMenu.value = false;
     await auth.logout();
@@ -160,7 +151,6 @@ const handleLogout = async () => {
 };
 
 onMounted(() => {
-    fetchProjects();
-    fetchStats();
+    dashboard.refreshSidebarData();
 });
 </script>

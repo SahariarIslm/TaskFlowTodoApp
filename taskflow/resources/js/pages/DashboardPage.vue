@@ -155,6 +155,7 @@ import { computed, ref, reactive, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import axios from '../plugins/axios';
 import { useAuthStore } from '../stores/auth';
+import { useDashboardStore } from '../stores/dashboard';
 import DashboardLayout from '../layouts/DashboardLayout.vue';
 import TaskModal from '../components/TaskModal.vue';
 import ConfirmModal from '../components/ConfirmModal.vue';
@@ -166,6 +167,7 @@ const stats = reactive({ total_tasks: 0, todo: 0, in_progress: 0, completed: 0 }
 const filters = reactive({ status: '', priority: '', sort: '', search: '' });
 const route = useRoute();
 const auth = useAuthStore();
+const dashboard = useDashboardStore();
 let searchTimer = null;
 
 const showModal = ref(false);
@@ -296,8 +298,7 @@ const handleSave = async (formData) => {
         await axios.post('/tasks', formData);
     }
     showModal.value = false;
-    fetchTasks(meta.current_page);
-    fetchStats();
+    await Promise.all([fetchTasks(meta.current_page), fetchStats(), dashboard.refreshSidebarData()]);
 };
 
 const confirmDelete = (task) => {
@@ -308,21 +309,20 @@ const confirmDelete = (task) => {
 const handleDelete = async () => {
     await axios.delete(`/tasks/${taskToDelete.value.id}`);
     showConfirm.value = false;
-    fetchTasks(meta.current_page);
-    fetchStats();
+    await Promise.all([fetchTasks(meta.current_page), fetchStats(), dashboard.refreshSidebarData()]);
 };
 
 const deleteFromModal = async () => {
     if (!selectedTask.value) return;
     await axios.delete(`/tasks/${selectedTask.value.id}`);
     showModal.value = false;
-    fetchTasks(meta.current_page);
-    fetchStats();
+    await Promise.all([fetchTasks(meta.current_page), fetchStats(), dashboard.refreshSidebarData()]);
 };
 
 onMounted(() => {
     fetchStats();
     fetchTasks();
     fetchUsers();
+    dashboard.refreshSidebarData();
 });
 </script>

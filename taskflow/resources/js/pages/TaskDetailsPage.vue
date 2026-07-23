@@ -160,6 +160,7 @@ import { computed, ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from '../plugins/axios';
 import { useAuthStore } from '../stores/auth';
+import { useDashboardStore } from '../stores/dashboard';
 import DashboardLayout from '../layouts/DashboardLayout.vue';
 import TaskModal from '../components/TaskModal.vue';
 import ConfirmModal from '../components/ConfirmModal.vue';
@@ -167,6 +168,7 @@ import ConfirmModal from '../components/ConfirmModal.vue';
 const route = useRoute();
 const router = useRouter();
 const auth = useAuthStore();
+const dashboard = useDashboardStore();
 const task = ref(null);
 const users = ref([]);
 const newComment = ref('');
@@ -236,12 +238,13 @@ const handleSave = async (formData) => {
     if (isEdit.value) {
         await axios.put(`/tasks/${selectedTask.value.id}`, formData);
         showModal.value = false;
-        fetchTask();
+        await Promise.all([fetchTask(), dashboard.refreshSidebarData()]);
         return;
     }
 
     await axios.post('/tasks', formData);
     showModal.value = false;
+    await dashboard.refreshSidebarData();
 };
 
 const addComment = async () => {
@@ -255,6 +258,7 @@ const addComment = async () => {
 
 const handleDelete = async () => {
     await axios.delete(`/tasks/${task.value.id}`);
+    await dashboard.refreshSidebarData();
     router.push('/dashboard');
 };
 
