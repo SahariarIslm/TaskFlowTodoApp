@@ -23,7 +23,7 @@
                         <router-link v-for="item in menuItems" :key="item.label" :to="item.to" class="flex h-11 items-center gap-3 rounded-xl px-3 font-medium text-slate-600 transition hover:bg-slate-100" active-class="bg-[#4f39f6] text-white hover:bg-[#4f39f6]">
                             <span v-html="item.icon" class="tf-sidebar-icon flex h-4 w-4 items-center justify-center"></span>
                             <span class="flex-1">{{ item.label }}</span>
-                            <span v-if="item.badge" class="rounded-full bg-slate-200 px-2 py-0.5 text-xs font-bold text-slate-500">{{ item.badge }}</span>
+                            <span v-if="item.badge !== undefined" class="rounded-full bg-slate-200 px-2 py-0.5 text-xs font-bold text-slate-500">{{ item.badge }}</span>
                         </router-link>
                     </nav>
 
@@ -39,14 +39,20 @@
                     </div>
                 </div>
 
-                <div class="border-t border-slate-200 p-5">
+                <div class="relative border-t border-slate-200 p-5">
+                    <div v-if="showAccountMenu" class="absolute bottom-[72px] right-4 z-30 w-44 rounded-xl border border-slate-200 bg-white p-2 shadow-[0_18px_45px_rgba(15,23,42,0.16)]">
+                        <router-link to="/profile" @click="showAccountMenu = false" class="flex h-9 items-center rounded-lg px-3 text-sm font-medium text-slate-600 hover:bg-slate-100">View profile</router-link>
+                        <router-link to="/settings" @click="showAccountMenu = false" class="flex h-9 items-center rounded-lg px-3 text-sm font-medium text-slate-600 hover:bg-slate-100">Edit profile</router-link>
+                        <button @click="handleLogout" class="flex h-9 w-full items-center rounded-lg px-3 text-left text-sm font-semibold text-rose-600 hover:bg-rose-50" type="button">Logout</button>
+                    </div>
                     <div class="flex items-center gap-3">
-                        <span class="flex h-9 w-9 items-center justify-center rounded-full bg-violet-100 text-xs font-bold text-[#4f39f6]">{{ initials }}</span>
+                        <img v-if="auth.user?.avatar" :src="auth.user.avatar" alt="" class="h-9 w-9 rounded-full object-cover" />
+                        <span v-else class="flex h-9 w-9 items-center justify-center rounded-full bg-violet-100 text-xs font-bold text-[#4f39f6]">{{ initials }}</span>
                         <div class="min-w-0 flex-1">
                             <p class="truncate text-sm font-bold text-slate-800">{{ auth.user?.name || 'Alex Morgan' }}</p>
                             <p class="truncate text-xs text-slate-500">{{ auth.user?.email || 'alex@taskflow.io' }}</p>
                         </div>
-                        <button @click="handleLogout" class="text-slate-400 hover:text-rose-600" type="button" aria-label="Logout">
+                        <button @click="showAccountMenu = !showAccountMenu" class="text-slate-400 hover:text-[#4f39f6]" type="button" aria-label="Account menu">
                             <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                                 <path d="M12 12h.01M18 12h.01M6 12h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
                             </svg>
@@ -82,7 +88,8 @@
                             </svg>
                             <span class="absolute right-2 top-2 h-2 w-2 rounded-full bg-[#4f39f6]"></span>
                         </button>
-                        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-violet-100 text-xs font-bold text-[#4f39f6]">{{ initials }}</span>
+                        <img v-if="auth.user?.avatar" :src="auth.user.avatar" alt="" class="h-10 w-10 shrink-0 rounded-full object-cover" />
+                        <span v-else class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-violet-100 text-xs font-bold text-[#4f39f6]">{{ initials }}</span>
                     </div>
                 </div>
             </header>
@@ -103,6 +110,8 @@ const auth = useAuthStore();
 const router = useRouter();
 const emit = defineEmits(['new-task']);
 const projects = ref([]);
+const totalTasks = ref(0);
+const showAccountMenu = ref(false);
 const initials = computed(() =>
     (auth.user?.name || 'Alex Morgan')
         .split(' ')
@@ -111,7 +120,7 @@ const initials = computed(() =>
         .slice(0, 2)
         .toUpperCase()
 );
-const menuItems = [
+const menuItems = computed(() => [
     {
         label: 'Dashboard',
         to: '/dashboard',
@@ -120,7 +129,7 @@ const menuItems = [
     {
         label: 'My Tasks',
         to: '/my-tasks',
-        badge: '4',
+        badge: totalTasks.value,
         icon: '<svg viewBox="0 0 24 24" fill="none"><path d="m9 11 2 2 4-5M5 5h14v14H5V5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     },
     {
@@ -133,17 +142,25 @@ const menuItems = [
         to: '/settings',
         icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" stroke="currentColor" stroke-width="2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1A2 2 0 1 1 4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1A2 2 0 1 1 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3h.1a1.7 1.7 0 0 0 1-1.6V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1A2 2 0 1 1 19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.6 1h.1a2 2 0 1 1 0 4H21a1.7 1.7 0 0 0-1.6 1Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
     },
-];
+]);
 const projectColors = ['bg-blue-500', 'bg-[#4f39f6]', 'bg-emerald-500', 'bg-rose-500', 'bg-amber-500'];
 const fetchProjects = async () => {
     const { data } = await axios.get('/dashboard/projects');
     projects.value = data.map((project, index) => ({ ...project, color: projectColors[index % projectColors.length] }));
 };
+const fetchStats = async () => {
+    const { data } = await axios.get('/dashboard/stats');
+    totalTasks.value = data.total_tasks || 0;
+};
 
 const handleLogout = async () => {
+    showAccountMenu.value = false;
     await auth.logout();
     router.push('/login');
 };
 
-onMounted(fetchProjects);
+onMounted(() => {
+    fetchProjects();
+    fetchStats();
+});
 </script>

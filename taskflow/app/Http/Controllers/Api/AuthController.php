@@ -10,8 +10,12 @@ use App\Http\Resources\UserResource;
 use App\Mail\SendOtpMail;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -106,5 +110,70 @@ class AuthController extends Controller
     public function me(Request $request)
     {
         return new UserResource($request->user());
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')->ignore($request->user()->id)],
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
+
+        $user = $request->user();
+        $user->fill([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+        ]);
+
+        if (!empty($validated['password'])) {
+            $user->password = Hash::make($validated['password']);
+        }
+
+        $user->save();
+
+        return new UserResource($user);
+    }
+
+    public function redirectToGoogle()
+    {
+        return response()->json([
+            'url' => Socialite::driver('google')->stateless()->redirect()->getTargetUrl(),
+        ]);
+    }
+
+    public function handleGoogleCallback(Request $request)
+    {
+        try {
+            $googleUser = Socialite::driver('google')->stateless()->user();
+        } catch (\Throwable $exception) {
+            return redirect('/login?google_error=Unable%20to%20authenticate%20with%20Google');
+        }
+
+        $user = DB::transaction(function () use ($googleUser) {
+            $user = User::firstOrNew(['email' => $googleUser->getEmail()]);
+
+            $user->fill([
+                'name' => $googleUser->getName() ?: $googleUser->getNickname() ?: $user->name ?: 'Google User',
+                'google_id' => $googleUser->getId(),
+                'avatar' => $googleUser->getAvatar(),
+                'is_verified' => true,
+                'otp' => null,
+                'otp_expires_at' => null,
+            ]);
+
+            if (!$user->exists) {
+                $user->password = Hash::make(Str::random(40));
+                $user->email_verified_at = now();
+            }
+
+            $user->save();
+
+            return $user;
+        });
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return redirect('/auth/google/success?token=' . urlencode($token));
     }
 }

@@ -33,9 +33,9 @@
             <div class="h-px flex-1 bg-slate-200"></div>
         </div>
 
-        <button type="button" class="tf-secondary-btn w-full">
+        <button type="button" @click="loginWithGoogle" :disabled="googleLoading" class="tf-secondary-btn w-full">
             <span class="font-bold text-[#4285f4]">G</span>
-            Continue with Google
+            {{ googleLoading ? 'Opening Google...' : 'Continue with Google' }}
         </button>
 
         <p class="mt-6 text-center text-sm text-slate-500">
@@ -46,15 +46,17 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { onMounted, reactive, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
 import axios from '../plugins/axios';
 import GuestLayout from '../layouts/GuestLayout.vue';
 
 const router = useRouter();
+const route = useRoute();
 const auth = useAuthStore();
 const loading = ref(false);
+const googleLoading = ref(false);
 const errorMsg = ref('');
 const form = reactive({ email: '', password: '' });
 
@@ -76,4 +78,23 @@ const submit = async () => {
         loading.value = false;
     }
 };
+
+const loginWithGoogle = async () => {
+    googleLoading.value = true;
+    errorMsg.value = '';
+
+    try {
+        const { data } = await axios.get('/auth/google/redirect');
+        window.location.href = data.url;
+    } catch (error) {
+        errorMsg.value = error.response?.data?.message || 'Google login is not configured yet.';
+        googleLoading.value = false;
+    }
+};
+
+onMounted(() => {
+    if (route.query.google_error) {
+        errorMsg.value = route.query.google_error;
+    }
+});
 </script>

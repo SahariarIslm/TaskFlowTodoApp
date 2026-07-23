@@ -17,7 +17,7 @@ class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
-    protected $fillable = ['name', 'email', 'password', 'otp', 'otp_expires_at', 'is_verified'];
+    protected $fillable = ['name', 'email', 'password', 'otp', 'otp_expires_at', 'is_verified', 'google_id', 'avatar'];
     protected function casts(): array
     {
         return [
