@@ -4,6 +4,103 @@
 @source '../../storage/framework/views/*.php';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Inter', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@layer base {
+    * {
+        box-sizing: border-box;
+    }
+
+    html {
+        background: #f8fafc;
+    }
+
+    body {
+        margin: 0;
+        color: #0f172b;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: geometricPrecision;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+        font: inherit;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible,
+    a:focus-visible {
+        outline: 3px solid rgb(79 57 246 / 0.22);
+        outline-offset: 2px;
+    }
+}
+
+@layer components {
+    .tf-logo {
+        @apply inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-[#4f39f6] text-base font-black text-white shadow-[0_12px_32px_rgba(79,57,246,0.28)];
+    }
+
+    .tf-logo-light {
+        @apply bg-white/20 shadow-none ring-1 ring-white/20;
+    }
+
+    .tf-primary-btn {
+        @apply inline-flex h-11 items-center justify-center gap-2 rounded-2xl bg-[#4f39f6] px-5 text-sm font-semibold text-white shadow-[0_1px_2px_-1px_#c6d2ff,0_1px_3px_#c6d2ff] transition hover:bg-[#432dd7] disabled:cursor-not-allowed disabled:opacity-60;
+    }
+
+    .tf-secondary-btn {
+        @apply inline-flex h-11 items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-5 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50;
+    }
+
+    .tf-danger-btn {
+        @apply inline-flex h-11 items-center justify-center rounded-2xl bg-rose-600 px-5 text-sm font-semibold text-white transition hover:bg-rose-700 disabled:cursor-not-allowed disabled:opacity-60;
+    }
+
+    .tf-input,
+    .tf-select,
+    .tf-textarea {
+        @apply w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm text-slate-800 transition placeholder:text-slate-400 focus:border-[#4f39f6] focus:ring-4 focus:ring-[#4f39f6]/10;
+    }
+
+    .tf-input,
+    .tf-select {
+        @apply h-11;
+    }
+
+    .tf-textarea {
+        @apply min-h-28 py-3;
+    }
+
+    .tf-label {
+        @apply mb-1.5 block text-xs font-medium text-slate-700;
+    }
+
+    .tf-panel {
+        @apply rounded-[24px] border border-slate-200 bg-white shadow-[0_18px_60px_rgba(15,23,42,0.06)];
+    }
+
+    .tf-chip {
+        @apply inline-flex h-7 items-center rounded-full px-3 text-xs font-semibold;
+    }
+
+    .tf-auth-shell {
+        @apply min-h-screen bg-slate-50;
+    }
+
+    .tf-auth-art {
+        background:
+            radial-gradient(circle at 88% -8%, rgb(255 255 255 / 0.16) 0 14rem, transparent 14.2rem),
+            radial-gradient(circle at -4% 94%, rgb(255 255 255 / 0.12) 0 10rem, transparent 10.2rem),
+            linear-gradient(135deg, #4f39f6 0%, #432dd7 52%, #7008e7 100%);
+    }
 }

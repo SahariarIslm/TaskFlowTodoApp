@@ -1,47 +1,58 @@
 <template>
-    <div v-if="show" class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-lg max-w-md w-full p-6 shadow-xl">
-            <h3 class="text-lg font-bold mb-4">{{ isEdit ? 'Edit Task' : 'Create Task' }}</h3>
-            <form @submit.prevent="submit" class="space-y-4">
+    <div v-if="show" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/55 p-4 backdrop-blur-sm">
+        <div class="tf-panel max-h-[90vh] w-full max-w-2xl overflow-y-auto p-6 shadow-[0_30px_90px_rgba(15,23,42,0.24)]">
+            <div class="mb-6 flex items-start justify-between gap-4">
                 <div>
-                    <label class="block text-sm font-medium">Title</label>
-                    <input v-model="form.title" required class="w-full border rounded px-3 py-2 mt-1" />
+                    <p class="text-xs font-semibold uppercase tracking-[0.08em] text-slate-400">Task</p>
+                    <h3 class="mt-1 text-2xl font-bold text-[#0f172b]">{{ isEdit ? 'Edit Task' : 'Create Task' }}</h3>
+                </div>
+                <button type="button" @click="$emit('close')" class="flex h-10 w-10 items-center justify-center rounded-2xl text-slate-500 hover:bg-slate-100" aria-label="Close modal">
+                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                </button>
+            </div>
+
+            <form @submit.prevent="submit" class="space-y-5">
+                <div>
+                    <label class="tf-label">Title</label>
+                    <input v-model="form.title" required class="tf-input" placeholder="Launch planning sprint" />
                 </div>
                 <div>
-                    <label class="block text-sm font-medium">Description</label>
-                    <textarea v-model="form.description" rows="3" class="w-full border rounded px-3 py-2 mt-1"></textarea>
+                    <label class="tf-label">Description</label>
+                    <textarea v-model="form.description" rows="4" class="tf-textarea" placeholder="Add context, requirements, or acceptance notes"></textarea>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid gap-4 sm:grid-cols-2">
                     <div>
-                        <label class="block text-sm font-medium">Status</label>
-                        <select v-model="form.status" class="w-full border rounded px-3 py-2 mt-1">
+                        <label class="tf-label">Status</label>
+                        <select v-model="form.status" class="tf-select">
                             <option value="todo">To Do</option>
                             <option value="in_progress">In Progress</option>
                             <option value="completed">Completed</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium">Priority</label>
-                        <select v-model="form.priority" class="w-full border rounded px-3 py-2 mt-1">
+                        <label class="tf-label">Priority</label>
+                        <select v-model="form.priority" class="tf-select">
                             <option value="low">Low</option>
                             <option value="medium">Medium</option>
                             <option value="high">High</option>
                         </select>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid gap-4 sm:grid-cols-2">
                     <div>
-                        <label class="block text-sm font-medium">Due Date</label>
-                        <input v-model="form.due_date" type="date" class="w-full border rounded px-3 py-2 mt-1" />
+                        <label class="tf-label">Due Date</label>
+                        <input v-model="form.due_date" type="date" class="tf-input" />
                     </div>
                     <div>
-                        <label class="block text-sm font-medium">Assignee</label>
-                        <input v-model="form.assignee" class="w-full border rounded px-3 py-2 mt-1" />
+                        <label class="tf-label">Assignee</label>
+                        <input v-model="form.assignee" class="tf-input" placeholder="Alex Morgan" />
                     </div>
                 </div>
-                <div class="flex justify-end gap-2 mt-6">
-                    <button type="button" @click="$emit('close')" class="px-4 py-2 border rounded">Cancel</button>
-                    <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded">Save</button>
+                <div class="flex flex-col-reverse gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:justify-end">
+                    <button type="button" @click="$emit('close')" class="tf-secondary-btn">Cancel</button>
+                    <button type="submit" class="tf-primary-btn">{{ isEdit ? 'Save changes' : 'Create task' }}</button>
                 </div>
             </form>
         </div>

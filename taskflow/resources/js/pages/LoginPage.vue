@@ -1,22 +1,46 @@
 <template>
     <GuestLayout>
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">Welcome Back</h2>
-        <p v-if="errorMsg" class="text-red-600 text-sm mb-4">{{ errorMsg }}</p>
-        <form @submit.prevent="submit" class="space-y-4">
+        <div class="mb-8">
+            <router-link to="/" class="mb-8 inline-flex items-center gap-3 lg:hidden">
+                <span class="tf-logo">TF</span>
+                <span class="text-xl font-bold text-slate-950">TaskFlow</span>
+            </router-link>
+            <h2 class="text-2xl font-bold text-[#0f172b]">Sign in to TaskFlow</h2>
+            <p class="mt-1 text-sm text-slate-500">Enter your credentials to access your workspace</p>
+        </div>
+
+        <p v-if="errorMsg" class="mb-4 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">{{ errorMsg }}</p>
+        <form @submit.prevent="submit" class="space-y-5">
             <div>
-                <label class="block text-sm font-medium">Email</label>
-                <input v-model="form.email" type="email" required class="w-full border rounded px-3 py-2 mt-1" />
+                <label class="tf-label">Email Address</label>
+                <input v-model="form.email" type="email" required class="tf-input pl-10" placeholder="you@company.com" />
             </div>
             <div>
-                <label class="block text-sm font-medium">Password</label>
-                <input v-model="form.password" type="password" required class="w-full border rounded px-3 py-2 mt-1" />
+                <div class="mb-1.5 flex items-center justify-between">
+                    <label class="block text-xs font-medium text-slate-700">Password</label>
+                    <span class="text-xs font-semibold text-[#4f39f6]">Forgot Password?</span>
+                </div>
+                <input v-model="form.password" type="password" required class="tf-input pl-10" placeholder="********" />
             </div>
-            <button type="submit" :disabled="loading" class="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 disabled:opacity-50">
-                {{ loading ? 'Signing in...' : 'Login' }}
+            <button type="submit" :disabled="loading" class="tf-primary-btn w-full">
+                {{ loading ? 'Signing in...' : 'Sign in' }}
             </button>
         </form>
-        <p class="mt-4 text-sm text-center">
-            Don't have an account? <router-link to="/register" class="text-indigo-600">Register</router-link>
+
+        <div class="my-6 flex items-center gap-3">
+            <div class="h-px flex-1 bg-slate-200"></div>
+            <span class="text-xs text-slate-400">or continue with</span>
+            <div class="h-px flex-1 bg-slate-200"></div>
+        </div>
+
+        <button type="button" class="tf-secondary-btn w-full">
+            <span class="font-bold text-[#4285f4]">G</span>
+            Continue with Google
+        </button>
+
+        <p class="mt-6 text-center text-sm text-slate-500">
+            Don't have an account?
+            <router-link to="/register" class="font-semibold text-[#4f39f6]">Create account</router-link>
         </p>
     </GuestLayout>
 </template>
